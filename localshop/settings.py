@@ -23,8 +23,9 @@ def FileSettings(path):
         pass
 
     try:
-        execfile(path, mod.__dict__)
-    except IOError, e:
+        with open(path, 'r') as fh:
+            exec(fh.read(), mod.__dict__)
+    except IOError as e:
         print("Notice: Unable to load configuration file %s (%s), "
               "using default settings\n\n" % (path, e.strerror))
         return Holder
@@ -112,7 +113,7 @@ class Base(Settings):
     )
 
     # Make this unique, and don't share it with anybody.
-    SECRET_KEY = ''
+    SECRET_KEY = 'CHANGE-ME'
 
     # List of callables that know how to import templates from various sources.
     TEMPLATE_LOADERS = (
